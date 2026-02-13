@@ -1,0 +1,87 @@
+{
+  "name": "hasura-permissions-explorer",
+  "description": "Visualize and explore Hasura GraphQL permissions with powerful filtering",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "author": "Egorov Vlad (jefoce)",
+  "homepage": "https://jefoce.github.io/hasura-permissions-explorer/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jefoce/hasura-permissions-explorer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jefoce/hasura-permissions-explorer/issues"
+  },
+  "keywords": [
+    "hasura",
+    "hasura-permissions",
+    "hasura-permissions-viewer",
+    "hasura-metadata",
+    "hasura-rbac",
+    "hasura-access-control",
+    "hasura-authorization",
+    "hasura-graphql",
+    "hasura-admin",
+    "hasura-tool",
+    "graphql-permissions",
+    "graphql-authorization",
+    "permissions-explorer",
+    "permissions-viewer",
+    "rbac",
+    "access-control",
+    "authorization"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && npm run build:main && npm run build:embedded",
+    "build:main": "vite build -- main",
+    "build:embedded": "vite build -- embedded",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preview": "vite preview",
+    "preview:prod": "npm run build && vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@apollo/client": "^4.1.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
+    "@noble/hashes": "^2.0.1",
+    "@types/lodash-es": "^4.17.12",
+    "fast-json-stable-stringify": "^2.1.0",
+    "graphql": "^16.12.0",
+    "lodash-es": "^4.17.23",
+    "qs": "^6.14.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/qs": "^6.14.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "prettier": "^3.8.1",
+    "terser": "^5.46.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.48.0",
+    "vite": "^7.3.1"
+  }
+}

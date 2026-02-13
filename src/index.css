@@ -1,0 +1,31 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #213547;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: block;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.json-key {
+  transition: background-color 200ms;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.json-key:hover {
+  background-color: #e3f2fd;
+}

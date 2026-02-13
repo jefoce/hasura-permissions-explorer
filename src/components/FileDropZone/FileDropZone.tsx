@@ -20,7 +20,6 @@ export const FileDropZone: React.FC<FileDropZoneProps> = (props) => {
   const fileName = useDataStore((state) => state.tabData[activeTab]?.fileName ?? null);
   const service = useDataStore((state) => state.tabData[activeTab]?.service ?? null);
 
-  const visibleRoles = useFilterStore((state) => state.getVisibleRoles(activeTab));
   const setVisibleRoles = useFilterStore((state) => state.setVisibleRoles);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -37,20 +36,15 @@ export const FileDropZone: React.FC<FileDropZoneProps> = (props) => {
         items.forEach((item) => {
           if (item.kind === 'file') {
             const file = item.getAsFile();
-            if (file && file.name.match(/\.json$/)) {
+            if (file?.name?.match(/\.json$/i)) {
               const reader = new FileReader();
-              reader.readAsDataURL(file);
-              reader.onloadend = function () {
+              reader.readAsText(file);
+              reader.onload = () => {
                 try {
-                  const base64Content = reader.result as string;
-                  const jsonString = atob(base64Content.replace('data:application/json;base64,', ''));
-                  const json = JSON.parse(jsonString);
+                  const json = JSON.parse(reader.result as string);
                   const newService = new HasuraMetaService(json);
                   setService(activeTab, newService, file.name);
-                  // Initialize filters with all roles if null
-                  if (visibleRoles === null) {
-                    setVisibleRoles(activeTab, newService.allRoles);
-                  }
+                  setVisibleRoles(activeTab, newService.allRoles);
                 } catch {
                   setError(activeTab, 'Cannot convert JSON :/');
                 }
@@ -60,7 +54,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = (props) => {
         });
       }
     },
-    [activeTab, setService, setError, visibleRoles, setVisibleRoles]
+    [activeTab, setService, setError, setVisibleRoles]
   );
 
   return (

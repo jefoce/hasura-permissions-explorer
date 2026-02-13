@@ -13,7 +13,6 @@ function getBuildTarget(): BuildTarget {
 }
 
 const buildTarget = getBuildTarget();
-console.log('Building target:', buildTarget);
 
 // Build configuration for main app (index.html)
 function getMainBuildConfig() {

@@ -9,7 +9,6 @@ import {
   Tab,
   Container,
   Stack,
-  Paper,
 } from '@mui/material';
 import React, { useCallback } from 'react';
 
@@ -71,25 +70,6 @@ export default function App() {
             <Typography variant="h4" component="h1" gutterBottom>
               Hasura Permissions Explorer
             </Typography>
-
-            <Paper
-              elevation={0}
-              sx={{
-                p: 1.5,
-                backgroundColor: 'grey.100',
-                border: '1px solid',
-                borderColor: 'grey.300',
-                borderRadius: 1,
-              }}
-            >
-              <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-                Filters and settings are stored in URL search params — share the link to give anyone access to your
-                current view.
-                <br />
-                Note: metadata is only stored for this session, so the JSON tab will be empty when shared or after
-                reload.
-              </Typography>
-            </Paper>
 
             <Box
               sx={{

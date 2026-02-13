@@ -45,8 +45,7 @@ export const ExportButton: React.FC<ExportButtonProps> = (props) => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error('Export failed:', error);
+      } catch {
         alert('Failed to export. Please try again.');
       }
     },
@@ -119,8 +118,7 @@ async function generateExportHTML(
       if (response.ok) {
         cssContent += '\n/* ' + cssFile + ' */\n' + (await response.text());
       }
-    } catch (error) {
-      console.warn('Failed to fetch CSS:', cssFile, error);
+    } catch {
     }
   }
 
@@ -132,8 +130,7 @@ async function generateExportHTML(
       if (response.ok) {
         jsContent += '\n/* ' + jsFile + ' */\n' + (await response.text());
       }
-    } catch (error) {
-      console.warn('Failed to fetch JS:', jsFile, error);
+    } catch {
     }
   }
 

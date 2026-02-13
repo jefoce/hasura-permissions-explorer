@@ -2,7 +2,6 @@ import { create, type StoreApi } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 import type { InferParams } from '@/types/zustand';
-import { createSearchParamsStorage } from '@/utils/zustand';
 
 type ConnectionStore = ReturnType<typeof connectionStoreConfig>;
 
@@ -34,7 +33,7 @@ const connectionStoreConfig = (...args: unknown[]) => {
 const useConnectionStore = create<ConnectionStore>()(
   persist(connectionStoreConfig, {
     name: 'connection',
-    storage: createJSONStorage(createSearchParamsStorage),
+    storage: createJSONStorage(() => localStorage),
   })
 );
 

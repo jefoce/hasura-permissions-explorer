@@ -37,23 +37,7 @@ export const PermissionTable = memo<PermissionTableProps>((props) => {
   const operationsToShow = visibleOperations === null ? CRUDOperationsList : visibleOperations;
 
   const fields = useMemo(() => {
-    const allFields = service.getTableFields();
-
-    if (!searchQuery || searchQuery.trim() === '') {
-      return allFields;
-    }
-
-    const query = searchCaseSensitive ? searchQuery : searchQuery.toLowerCase();
-
-    return allFields.filter((field) => {
-      const fieldToCompare = searchCaseSensitive ? field : field.toLowerCase();
-
-      if (searchExactMatch) {
-        return fieldToCompare === query;
-      } else {
-        return fieldToCompare.includes(query);
-      }
-    });
+    return service.getVisibleFields(searchQuery, searchExactMatch, searchCaseSensitive);
   }, [service, searchQuery, searchExactMatch, searchCaseSensitive]);
 
   const hasOperationFilters = useMemo(

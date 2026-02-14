@@ -119,6 +119,7 @@ async function generateExportHTML(
         cssContent += '\n/* ' + cssFile + ' */\n' + (await response.text());
       }
     } catch {
+      // Ignore fetch errors for CSS files
     }
   }
 
@@ -131,6 +132,7 @@ async function generateExportHTML(
         jsContent += '\n/* ' + jsFile + ' */\n' + (await response.text());
       }
     } catch {
+      // Ignore fetch errors for JS files
     }
   }
 

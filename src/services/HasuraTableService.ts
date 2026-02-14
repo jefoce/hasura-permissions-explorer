@@ -3,6 +3,7 @@ import { flatMap, uniq, sortBy, isObject, isArray } from 'lodash-es';
 import type { TablePermissions, Permission, FieldPermission, RolePermissions } from '@/types/hasura';
 import { CRUDOperation, CRUDOperationsList } from '@/types/hasura';
 import { getValueHash } from '@/utils/get-value-hash';
+import { fnMemo } from '@/utils/memoize';
 
 interface FieldRolePermissions {
   operation: CRUDOperation;
@@ -223,5 +224,29 @@ export class HasuraTableService {
   // Get hash for a specific path
   getPathHash(path: string): string | undefined {
     return this.pathToHash.get(path);
+  }
+
+  // Memoized field filtering - returns filtered field names
+  getVisibleFields = fnMemo(
+    (searchQuery: string = '', searchExactMatch: boolean = false, searchCaseSensitive: boolean = false): string[] => {
+      if (!searchQuery.trim()) return this.fields;
+
+      const query = searchCaseSensitive ? searchQuery : searchQuery.toLowerCase();
+
+      return this.fields.filter((field) => {
+        const fieldToCompare = searchCaseSensitive ? field : field.toLowerCase();
+        return searchExactMatch ? fieldToCompare === query : fieldToCompare.includes(query);
+      });
+    },
+    20
+  );
+
+  // Quick check if table has any visible fields (uses cached getVisibleFields)
+  hasVisibleFields(
+    searchQuery: string = '',
+    searchExactMatch: boolean = false,
+    searchCaseSensitive: boolean = false
+  ): boolean {
+    return this.getVisibleFields(searchQuery, searchExactMatch, searchCaseSensitive).length > 0;
   }
 }

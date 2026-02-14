@@ -1,14 +1,14 @@
 import {
-  Typography,
-  Box,
   Alert,
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-  Tabs,
-  Tab,
+  Box,
   Container,
+  CssBaseline,
   Stack,
+  Tab,
+  Tabs,
+  ThemeProvider,
+  Typography,
+  createTheme,
 } from '@mui/material';
 import React, { useCallback } from 'react';
 
@@ -18,7 +18,6 @@ import { FileDropZone } from '@/components/FileDropZone';
 import { FilterPanel } from '@/components/FilterPanel';
 import { PermissionTables } from '@/components/PermissionTable';
 import { useDataStore, TabIndex } from '@/stores/data.store';
-import { useFilterStore } from '@/stores/filter.store';
 
 const theme = createTheme({
   palette: {
@@ -44,11 +43,6 @@ export default function App() {
   const service = useDataStore((state) => state.tabData[activeTab]?.service ?? null);
   const error = useDataStore((state) => state.tabData[activeTab]?.error ?? null);
   const allRoles = useDataStore((state) => state.getAllRoles(activeTab));
-  const visibleRoles = useFilterStore((state) => state.getVisibleRoles(activeTab));
-  const visibleOperations = useFilterStore((state) => state.getVisibleOperations(activeTab));
-  const searchQuery = useFilterStore((state) => state.getSearchQuery(activeTab));
-  const searchExactMatch = useFilterStore((state) => state.getSearchExactMatch(activeTab));
-  const searchCaseSensitive = useFilterStore((state) => state.getSearchCaseSensitive(activeTab));
 
   // Get store actions directly (they're stable references)
   const setActiveTab = useDataStore((state) => state.setActiveTab);
@@ -101,14 +95,7 @@ export default function App() {
 
         {allRoles && <FilterPanel roles={allRoles} tabId={activeTab} />}
 
-        <PermissionTables
-          service={service}
-          visibleRoles={visibleRoles}
-          visibleOperations={visibleOperations}
-          searchQuery={searchQuery}
-          searchExactMatch={searchExactMatch}
-          searchCaseSensitive={searchCaseSensitive}
-        />
+        <PermissionTables service={service} tabId={activeTab} />
       </Stack>
     </ThemeProvider>
   );

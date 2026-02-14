@@ -1,6 +1,7 @@
 import { flatMap, uniq, sortBy } from 'lodash-es';
 
 import type { TablePermissions, HasuraMetadata } from '@/types/hasura';
+import { fnMemo } from '@/utils/memoize';
 
 import { HasuraTableService } from './HasuraTableService';
 
@@ -75,4 +76,14 @@ export class HasuraMetaService {
 
     return sortBy(uniq(roles));
   }
+
+  // Memoized filtering - returns table names that have visible fields based on search criteria
+  getVisibleTableNames = fnMemo(
+    (searchQuery: string = '', searchExactMatch: boolean = false, searchCaseSensitive: boolean = false): string[] => {
+      return this.tables
+        .filter((table) => table.hasVisibleFields(searchQuery, searchExactMatch, searchCaseSensitive))
+        .map((t) => t.tableName);
+    },
+    20
+  );
 }

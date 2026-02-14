@@ -2,7 +2,7 @@ import { Paper, Divider, Box, Collapse } from '@mui/material';
 import React from 'react';
 
 import { useStickyCollapse } from '@/hooks/useStickyCollapse';
-import { type FilterTabId } from '@/stores/filter.store';
+import { useFilterStore, type FilterTabId } from '@/stores/filter.store';
 
 import { FilterPanelHeader } from './FilterPanelHeader';
 import { OperationsFilter } from './OperationsFilter';
@@ -17,6 +17,12 @@ export interface FilterPanelProps {
 export const FilterPanel: React.FC<FilterPanelProps> = (props) => {
   const { roles, tabId } = props;
   const { isExpanded, toggle, containerRef } = useStickyCollapse({ threshold: 300 });
+  const setFilterExpanded = useFilterStore((state) => state.setFilterExpanded);
+
+  // Sync hook state with store
+  React.useEffect(() => {
+    setFilterExpanded(tabId, isExpanded);
+  }, [isExpanded, tabId, setFilterExpanded]);
 
   return (
     <Box ref={containerRef} sx={{ position: 'sticky', top: 0, zIndex: 100 }}>

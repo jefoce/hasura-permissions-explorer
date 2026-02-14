@@ -46,6 +46,12 @@ const filterStoreConfig = (...args: unknown[]) => {
       embedded: false,
     },
 
+    isFilterExpanded: {
+      [TabIndex.ConnectToHasura]: true,
+      [TabIndex.UploadJSON]: true,
+      embedded: true,
+    },
+
     toggleRole(tabId: FilterTabId, role: string): void {
       const { visibleRoles } = get();
       const currentRoles = visibleRoles[tabId] ?? null;
@@ -164,6 +170,20 @@ const filterStoreConfig = (...args: unknown[]) => {
 
     getSearchCaseSensitive(tabId: FilterTabId): boolean {
       return get().searchCaseSensitive[tabId] ?? false;
+    },
+
+    setFilterExpanded(tabId: FilterTabId, expanded: boolean): void {
+      const { isFilterExpanded } = get();
+      set({
+        isFilterExpanded: {
+          ...isFilterExpanded,
+          [tabId]: expanded,
+        },
+      });
+    },
+
+    getFilterExpanded(tabId: FilterTabId): boolean {
+      return get().isFilterExpanded[tabId] ?? true;
     },
   };
 };

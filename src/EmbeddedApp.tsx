@@ -1,4 +1,4 @@
-import { Typography, CssBaseline, ThemeProvider, createTheme, Link, Stack } from '@mui/material';
+import { CssBaseline, Link, Stack, ThemeProvider, Typography, createTheme } from '@mui/material';
 import { useEffect, useMemo } from 'react';
 
 import { FilterPanel } from '@/components/FilterPanel';
@@ -43,12 +43,8 @@ export default function EmbeddedApp() {
     return null;
   }, []);
 
-  const visibleRoles = useFilterStore((state) => state.getVisibleRoles('embedded'));
-  const visibleOperations = useFilterStore((state) => state.getVisibleOperations('embedded'));
-  const searchQuery = useFilterStore((state) => state.getSearchQuery('embedded'));
-  const searchExactMatch = useFilterStore((state) => state.getSearchExactMatch('embedded'));
-  const searchCaseSensitive = useFilterStore((state) => state.getSearchCaseSensitive('embedded'));
   const setVisibleRoles = useFilterStore((state) => state.setVisibleRoles);
+  const visibleRoles = useFilterStore((state) => state.getVisibleRoles('embedded'));
 
   useEffect(() => {
     if (service && visibleRoles === null) {
@@ -76,14 +72,7 @@ export default function EmbeddedApp() {
         {service && (
           <>
             <FilterPanel roles={service.allRoles} tabId="embedded" />
-            <PermissionTables
-              service={service}
-              visibleRoles={visibleRoles}
-              visibleOperations={visibleOperations}
-              searchQuery={searchQuery}
-              searchExactMatch={searchExactMatch}
-              searchCaseSensitive={searchCaseSensitive}
-            />
+            <PermissionTables service={service} tabId="embedded" />
           </>
         )}
       </Stack>
